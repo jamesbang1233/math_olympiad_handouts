@@ -1,0 +1,92 @@
+\documentclass[12pt]{article}
+\usepackage[margin=0.5in]{geometry}
+\usepackage{amsmath,amsfonts,amsthm,amssymb}
+\usepackage{enumitem}
+
+\usepackage{pgf,tikz,pgfplots}
+\pgfplotsset{compat=1.15}
+\usepackage{mathrsfs}
+\usetikzlibrary{arrows}
+
+%opening
+\title{Problem Set 7 Solutions}
+\author{Written by James Bang for the NSW AMOC Correspondence Program}
+
+\usepackage[framemethod=TikZ]{mdframed}
+
+\newcounter{theo}[subsection]\setcounter{theo}{0}
+\renewcommand{\thetheo}{\arabic{section}.\arabic{subsection}}
+\newenvironment{theo}[2][]{%
+	\refstepcounter{theo}%
+	\ifstrempty{#1}%
+	{\mdfsetup{%
+			frametitle={%
+				\tikz[baseline=(current bounding box.east),outer sep=0pt]
+				\node[anchor=east,rectangle,fill=cyan!50]
+				{\strut Problem~\thetheo};}}
+	}%
+	{\mdfsetup{%
+			frametitle={%
+				\tikz[baseline=(current bounding box.east),outer sep=0pt]
+				\node[anchor=east,rectangle,fill=cyan!50]
+				{\strut Problem~\thetheo:~#1};}}%
+	}%
+	\mdfsetup{innertopmargin=10pt,linecolor=cyan!50,%
+		linewidth=2pt,topline=true,%
+		frametitleaboveskip=\dimexpr-\ht\strutbox\relax
+	}
+	\begin{mdframed}[]\relax%
+		\label{#2}}{\end{mdframed}}
+
+%
+
+\begin{document}
+
+\maketitle
+\section{Problem Set 7}
+\subsection{Question 1}
+\begin{theo}{eouoiei} 
+		\item For all real $x$, show that $\displaystyle \frac{x^2+2}{\sqrt{x^2+1}}\geqslant 2.$
+\end{theo}
+\textit{Solution (1).} Squaring both sides and multiplying by $x^2+1$, this inequality is equivalent to \[(x^2+2)^2\geq 4(x^2+1).\] However, after cancellation this is $x^4\geq 0$, which is trivially true.
+
+\vspace{2mm}
+
+\noindent \textit{Solution (2).} Notice by the AM-GM inequality that $(x^2+1)+1\geq 2\sqrt{x^2+1}$. Then divide both sides by $\sqrt{x^2+1}$ to get the desired inequality.
+
+
+\subsection{Question 2}
+\begin{theo}{zzzzz}
+	\item Prove that for all real numbers $x$, we have $x^4+6x^2+1\geqslant 4x(x^2+1)$. When does inequality hold?
+\end{theo}
+\textit{Solution.} Notice that $LHS-RHS=x^4-4x^3+6x^2-4x+1=(x-1)^4\geq 0.$
+
+
+\subsection{Question 3}
+\begin{theo}{oebnioehbtn}
+	\item Prove that for all positive reals $a,b,c$, we have $\displaystyle \frac{a^2}{b}+\frac{b^2}{c}+\frac{c^2}{a}\geqslant a+b+c$.
+\end{theo}
+\textit{Solution (1).} By the Cauchy-Schwarz Inequality, we have \[(b+c+a)\left(\frac{a^2}{b}+\frac{b^2}{c}+\frac{c^2}{a}\right)\geq (a+b+c)^2.\] Then, divide both sides by $a+b+c$ to get the desired inequality.
+
+\vspace{2mm}
+
+\noindent \textit{Solution (2).} By the AM-GM Inequality, we have \[\frac{a^2}{b}+a+b\geq 3a.\] Then add the similar inequalities for $\frac{b^2}{c}$ and $\frac{c^2}{a}$ to get the desired inequality. 
+
+
+\subsection{Question 4}
+\begin{theo}{uebu}
+\item What is the maximum value of $a^5(1-a)$ for $0<a<1$?
+\end{theo}
+\textit{Solution.} We have by the AM-GM Inequality \[a^5(1-a)=5^5\times \frac{a}{5}\cdot \frac{a}{5}\cdot \frac{a}{5}\cdot \frac{a}{5}\cdot \frac{a}{5}\cdot (1-a)\leq 5^5\cdot \left(\frac{\frac{a}{5}+\frac{a}{5}+\frac{a}{5}+\frac{a}{5}+\frac{a}{5}+(1-a)}{6}\right)^6=5^5\cdot \frac{1}{6^6}=\frac{5^5}{6^6}.\] Equality occurs when $\frac{a}{5}=1-a$, or $a=5/6$.
+
+
+\subsection{Question 5}
+\begin{theo}{oihbtbt}
+\item Let $x,y$ be nonnegative reals with sum $2$. Prove that $x^2y^2(x^2+y^2)\leqslant 2$.
+\end{theo}
+\textit{Solution (1).} Since we have $x+y=2$, the inequality is equivalent to $32x^2y^2(x^2+y^2)\leq (x+y)^6$, or after expansion \[x^6+6x^5y-17x^4y^2+20x^3y^3-17x^2y^4+6xy^5+y^6\geq 0.\] However, this is also equivalent to \[(x-y)^2(x^4+8x^3y-2x^2y^2+8xy^3+y^4)\geq 0,\] which is trivially true since $x^4+8x^3y-2x^2y^2+8xy^3+y^4=8xy(x^2+y^2)+(x^2-y^2)^2>0$.
+
+\vspace{2mm}
+
+\noindent \textit{Solution (2).} Let $A=xy$. Then, since we have $4xy\leq (x+y)^2=4$, we have $A\leq 1$. We also have \[x^2y^2(x^2+y^2)=(xy)^2((x+y)^2-2xy)=A^2(4-2A)\leq 2,\] which is equivalent to \[A^3-2A^2+1\geq 0\ \Leftrightarrow\ (1-A)(1+A-A^2)\geq 0.\] However, this is true since $1-A\geq 0$ (or $A\leq 1$) and thus $1\geq A^2$ meaning the second bracket is nonnegative as well.
+\end{document}

@@ -1,0 +1,109 @@
+\documentclass[12pt]{article}
+\usepackage[margin=0.5in]{geometry}
+\usepackage{amsmath,amsfonts,amsthm,amssymb}
+\usepackage{enumitem}
+
+\usepackage{pgf,tikz,pgfplots}
+\pgfplotsset{compat=1.15}
+\usepackage{mathrsfs}
+\usetikzlibrary{arrows}
+
+%opening
+\title{Problem Set 10 Solutions}
+\author{Written by James Bang for the NSW AMOC Correspondence Program}
+
+\usepackage[framemethod=TikZ]{mdframed}
+
+\newcounter{theo}[subsection]\setcounter{theo}{0}
+\renewcommand{\thetheo}{\arabic{section}.\arabic{subsection}}
+\newenvironment{theo}[2][]{%
+	\refstepcounter{theo}%
+	\ifstrempty{#1}%
+	{\mdfsetup{%
+			frametitle={%
+				\tikz[baseline=(current bounding box.east),outer sep=0pt]
+				\node[anchor=east,rectangle,fill=cyan!50]
+				{\strut Problem~\thetheo};}}
+	}%
+	{\mdfsetup{%
+			frametitle={%
+				\tikz[baseline=(current bounding box.east),outer sep=0pt]
+				\node[anchor=east,rectangle,fill=cyan!50]
+				{\strut Problem~\thetheo:~#1};}}%
+	}%
+	\mdfsetup{innertopmargin=10pt,linecolor=cyan!50,%
+		linewidth=2pt,topline=true,%
+		frametitleaboveskip=\dimexpr-\ht\strutbox\relax
+	}
+	\begin{mdframed}[]\relax%
+		\label{#2}}{\end{mdframed}}
+
+%
+
+\begin{document}
+
+\maketitle
+\section{Problem Set 10}
+\subsection{Question 1}
+\begin{theo}{eouoiei} 
+	Let $a,b,c$ be the roots of the polynomial $P(x)=2x^3-3x^2+4x-5$. Evaluate the following numbers in closed form (i.e. express them as a single rational number).
+	\begin{enumerate}[label=(\alph*)]
+		\item $a+b+c$;
+		\item $a^2+b^2+c^2$;
+		\item $(a+b)(b+c)(c+a)$.
+	\end{enumerate}
+\end{theo}
+\textit{Solution.} We have $2x^3-3x^2+4x-5=2(x-a)(x-b)(x-c)$, and so $\boxed{a+b+c=\frac{3}{2}}$, $ab+bc+ca=2$ and $abc=\frac{5}{2}$. Hence, $a^2+b^2+c^2=(a+b+c)^2-2(ab+bc+ca)=(\frac{3}{2})^2-2(2)=\frac{7}{4}$.
+
+\vspace{2mm}
+
+\noindent We also have $(a+b)(b+c)(c+a)=(\frac{3}{2}-a)(\frac{3}{2}-b)(\frac{3}{2}-c)=\frac{1}{2}P(\frac{3}{2})=\frac{1}{2}.$
+
+
+\subsection{Question 2}
+\begin{theo}{zzzzz}
+	Let $x\neq y$ be integers. Show, by factorisation or otherwise, that $x-y\mid x^n-y^n$. Hence show that $x-y\mid P(x)-P(y)$ whenever $P(x)$ is an integer polynomial.
+\end{theo}
+\textit{Solution.} We have $x^n-y^n=(x-y)(x^{n-1}+x^{n-2}y+\dots+xy^{n-1}+y^n)$. The second larger bracket is an integer since $x,y$ are integers. It follows that $x-y\mid x^n-y^n$.
+
+\vspace{2mm}
+
+\noindent We also have \[P(x)-P(y)=\sum^n_{k=0}a_kx^k-\sum^n_{k=0}a_ky^k=\sum^n_{k=0}a_k(x^k-y^k).\] Since we have $x-y\mid x^k-y^k$ for each $k$, it follows that $x-y\mid P(x)-P(y)$.
+
+\subsection{Question 3}
+\begin{theo}{oebnioehbtn}
+	Let $P(x)$ be a \textbf{cubic} polynomial with roots $r_1,r_2,r_3$. It is given that \[\frac{P(\frac{1}{2})+P(-\frac{1}{2})}{P(0)}=1012.\] Find the value of $\frac{1}{r_1r_2}+\frac{1}{r_2r_3}+\frac{1}{r_3r_1}$.
+\end{theo}
+\textit{Solution.} For any polynomial $P$ satisfying this, notice that the polynomial $c\cdot P$ for any nonzero constant $c$ would also satisfy the equation. Hence, we can assume $P$ is monic, i.e. $P(x)=x^3+ax^2+bx+c$ for some reals $a,b,c$. Then, we have \[\frac{P(\frac{1}{2})+P(-\frac{1}{2})}{P(0)}=\frac{((\frac{1}{2})^3+a(\frac{1}{2})^2+b(\frac{1}{2})+c)+((-\frac{1}{2})^3+a(-\frac{1}{2})^2+b(-\frac{1}{2})+c)}{c}=\frac{a/2+2c}{c}=1012\] and so $a/2+2c=1012c$ and so $a/c=2020$. However, notice by Vieta that \[a=-(r_1+r_2+r_3),\ c=-r_1r_2r_3\] and so \[\frac{1}{r_1r_2}+\frac{1}{r_2r_3}+\frac{1}{r_3r_1}=\frac{r_1+r_2+r_3}{r_1r_2r_3}=\frac{a}{c}=2020.\]
+
+
+\subsection{Question 4}
+\begin{theo}{uebu}
+A nonzero real number $a$ is given. Find all polynomials $P(x)$ with real coefficients for which $P(x+a)=P(x)+a$ for every real number $x$.
+
+\vspace{2mm}
+
+\noindent \textit{Hint. What can you say about the polynomial $Q(x)=P(x)-x$?}
+\end{theo}
+\textit{Solution.} Let $Q(x)=P(x)-x$. Then, we have $P(x)=Q(x)+x$, and so plugging in we get \[Q(x+a)+(x+a)=Q(x)+x+a\ \Longrightarrow\ Q(x+a)=Q(x).\] This means $Q$ is a periodic polynomial, which implies $Q$ is constant. It follows that $P(x)=x+c$ for some constant $c$.
+
+\pagebreak
+
+
+\pagebreak
+
+
+
+\pagebreak
+
+\subsection{Question 5}
+\begin{theo}{oihbtbt}
+Find all polynomials $P(x)$ with real coefficients such that \[(x-27)P(3x)=27(x-1)P(x).\]
+\end{theo}
+\textit{Solution.} Plugging $x=1$ gives $P(3)=0$, and so $x-3$ is a factor of $P$. Also plugging $x=27$ gets $P(27)=0$, and so $x-27$ is also a factor of $P$. Hence, letting $P(x)=(x-3)(x-27)Q(x)$, we obtain \[(x-27)(3x-3)(3x-27)Q(3x)=27(x-1)(x-3)(x-27)Q(x)\] \[(x-9)Q(3x)=3(x-3)Q(x).\] Plugging $x=3$ gives $Q(9)=0$, and so $x-9$ is a factor of $Q$. Hence, letting $Q(x)=(x-9)R(x)$, we obtain \[(x-9)(3x-9)R(3x)=3(x-3)(x-9)R(x)\] \[R(3x)=R(x).\] Suppose $R$ is nonconstant: then if $r$ was a root of $R$, then $3r$ is also a root, and so is $9r,27r,81r,\dots$. This means $R$ has infinitely many roots, which is a contradiction. It follows $R$ is constant, and thus all polynomials $P(x)$ are of the form \[P(x)=C(x-3)(x-9)(x-27)\] for some constant $C$.
+
+
+
+\end{document}
+
+

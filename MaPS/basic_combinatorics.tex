@@ -1,0 +1,123 @@
+\documentclass[12pt]{article}
+\usepackage[margin=0.5in]{geometry}
+\usepackage{amsmath,amsfonts,amsthm,amssymb}
+
+\usepackage{pgf,tikz,pgfplots}
+\pgfplotsset{compat=1.15}
+\usepackage{mathrsfs}
+\usetikzlibrary{arrows}
+
+%opening
+\title{Basic Combinatorics}
+\author{Written by James Bang for the NSW Correspondence Program}
+
+\begin{document}
+
+\maketitle
+
+\section{Introduction}
+Counting the number of ways to choose objects or the number of elements in a given set is a skill required to solve nearly all combinatorics problems. Even problems that aren't explicit counting problems rely on these techniques to create bounds, or to sanity-check ideas. As such, to succeed in combinatorics it is important to master all the techniques included below.
+\section{Counting Methods}
+\subsection{The Sum and Product principle}
+In choosing between two ways of selecting objects, the way these choices affects the total number of ways to make our selection. If two choices are independent, then the number of ways of making both of these choices together is the product of the number of individual choices. For example, if I have three pairs of shorts and four T-shirts, the number of different outfits I can select is the product of the choices I can make for each, so twelve total outfits.
+
+\vspace{2mm}
+
+\noindent If two choices are not independent but are mutually exclusive, then the total number of choices is the sum of each. For example, if I have five pairs of thongs and four pairs of sneakers, I can choose nine types of footwear on any given occasion as wearing the thongs is mutually exclusive with wearing the sneakers.
+\subsection{Ordered and Unordered Choices}
+Most of the formulae below can be derived by considering how many choices there are at each step, and simply multiplying them together.
+\begin{itemize}
+	\item The number of ways to arrange $n$ distinct objects is $n!$ (or $n$ factorial), which is equal to $n\cdot (n-1)\cdot \dots\cdot 1$ (so for example, $5!=120$).
+	\item The number of ways to select $r$ objects from $n$ choices if \textbf{order is important} and if repetition is \textbf{not} allowed is: \[\boxed{n(n-1)(n-2)\dots (n-r+1)=\frac{n!}{(n-r)!}.}\] These are known as \textbf{permutations.} Notice that this is a generalised case of the idea above, where $r=n$ and $0!=1$.
+	\item The number of ways to select $r$ objects from $n$ choices if \textbf{order is important} and if repetition is allowed: $\boxed{n^r}$.
+	\item The number of ways to select $r$ objects from $n$ choices if order is \textbf{not important} and if repetition is \textbf{not allowed} is: \[\boxed{\binom{n}{r}=\frac{n(n-1)\dots (n-r+1)}{r(r-1)\dots 1}=\frac{n!}{r!(n-r)!}.}\] This value is often referred to as ``$n$ choose $r$", and is easily the most commonly used of the basic combinatorial counting methods.
+	\item \textbf{The Supermarket Principle.}
+	
+	\vspace{2mm}
+	
+	\noindent We have not yet covered the number of ways to make a selection of $r$ objects from $n$ categories where order is \textbf{not important} and repetition \textbf{is allowed}. For example, how many ways can we select six fruits, when only apples, pears and oranges are available?
+	
+	\vspace{2mm}
+	
+	\noindent To address this, we consider placing these items on the conveyor-belt with apples on the left, oranges in the middle and pears on the right. If we place two separators between the apples and oranges, and the oranges and the pears this defines the fruit purchase. If we know barrier one is between fruit $3$ and $4$ and barrier two is between fruit $3$ and $4$ we know there are three apples, no oranges and three pears. The barriers can go in any position so the number of different selections we can make is the number of ways of choosing two spots to be barriers, which equals $\binom{2+6}{2}$.
+	\vspace{2mm}
+	
+	\noindent In general, the number of ways to make a selection of $r$ objects from $n$ categories where order is not important and repetition is allowed is $\boxed{\binom{n+r-1}{r-1}.}$
+\end{itemize}
+\subsection{The Binomial Theorem}
+Numbers of the form $\binom{n}{r}$ are known as \textbf{binomial coefficients.} This is because they arise in the expression of the binomial expressions such as $(x+y)^n$: in particular, the coefficient of $x^ky^{n-k}$ is $\binom{n}{k}$. Try and understand why this is the case by combinatorial reasons.
+
+\vspace{2mm}
+
+\noindent Pascal's Triangle lists all the values from $\binom{n}{0}$ to $\binom{n}{n}$ on the $n$-th row of the triangle. The rows up to $n=4$ are shown below:
+\begin{center}
+	\begin{tabular}{ c c c c c c c c c c }
+		$n=0$: & & & & &1& & & & \\ 
+		$n=1$: & & & &1& &1& & & \\  
+		$n=2$: & & &1& &2& &1& & \\  
+		$n=3$: & &1& &3& &3& &1& \\  
+		$n=4$: &1& &4& &6& &4& &1\\  
+	\end{tabular}
+\end{center}
+There are many notable patterns in this triangle, most obvious that the sum of two adjacent numbers occurs as the number below. This is due to the following recurrence relation for the binomial coefficients: \[\binom{n}{r}+\binom{n}{r+1}=\binom{n+1}{r+1}.\] \textbf{Exercise:} Find combinatorial proofs for this, as well as the other identities below: \[\binom{n}{r}=\binom{n}{n-r}\] \[\binom{n}{0}+\binom{n}{1}+\binom{n}{2}+\dots+\binom{n}{n-1}+\binom{n}{n}=2^n\] \[\binom{n}{0}-\binom{n}{1}+\binom{n}{2}-\binom{n}{3}+\dots+(-1)^n\binom{n}{n}=0.\]
+\subsection{Multinomial Coefficients}
+When choosing multiple different groups out of a single body of objects, instead of using binomial coefficients for each time a group is chosen, we can express the number of possible selections as one \textbf{multinomial coefficient.} We know that the number of ways to split a group of $n$ objects into two smaller groups of $r$ and $n-r$ is $\binom{n}{r}$. If we wish to split the $n$ objects into a smaller number of groups, say groups ef $k_1,k_2,\dots,k_m$, where $k_1+k_2+\dots+k_m=n$, this can be expressed as: \[\binom{n}{k_1,k_2,\dots,k_m}=\frac{n!}{k_1!k_2!\dots k_m!}.\]
+\subsection{The Inclusion-Exclusion Principle}
+We use the inclusion-exclusion principle when we wish to find the value of a union of different sets. It involves overcounting by adding all members of each set, and then ``correcting" this value by subtracting the overlap. For two sets it is expressed as: \[|A\cup B|=|A|+|B|-|A\cap B|.\] In can be extended to any number of sets, with alternating addition and subtraction of intersection elements. For three sets, the expression is \[|A\cup B\cup C|=|A|+|B|+|C|-|A\cap B|-|B\cap C|-|C\cap A|+|A\cap B\cap C|,\] and in general \[\left|A_1\cup A_2\cup \dots\cup A_n\right|=\sum_{\substack{I\subseteq \{1,\dots,n\} \\ I\neq \emptyset}}(-1)^{|I|+1}\left|\bigcap_{i\in I}A_i\right|.\]
+\section{Other Important Concepts}
+\subsection{The Pigeonhole Principle}
+The pigeonhole principle is an existence proof that given $n$ holes and $n+1$ pigeons, we can find at least one hole that contains at least two pigeons. More generally, if we have $n$ pigeons and $m$ holes, there must be a hore with at least $\lceil \frac{n}{m}\rceil$ pigeons.
+
+\vspace{2mm}
+
+\noindent While this is fairly intuitive to grasp, the challenge is using the PHP is to identify where it can be used to good effect and identifying the correct `pigeons' and the correct `pigeonholes'.
+\subsection{Derangements}
+Derangements do not often appear in Olympiad problems but they are an interesting combinatorial concept. A derangement is the number of ways to permute the set $\{1,2,\dots,n\}$ such that no object is in its initial location. You should think about how we can use the inclusion-exclusion principle to find the following formula: \[D_n=n!\left(1-
+\frac{1}{1!}+\frac{1}{2!}-\frac{1}{3!}+\dots+(-1)^n\frac{1}{n!}\right).\] Derangements can see use in proving bounds for certain problems, in which case you might be more inclined to use the fact that $D_n$ is the closest integer to the real number $n!/e$.
+\subsection{Double Counting}
+Often in problems you will be given enough information to count a certain property in two different ways. You might be given information about the number of mutual friends any two people have at a party and the number of mutual friend triangles. If you can use both of these pieces of information to count the same thing, perhaps the total number of friendships, they can be equated which allows you to construct bounds or directly solve for the total number of people at the party. This technique can solve many problems, with the trick here to find the right object to count. 
+\section{Problems}
+While these problems are not required to be submitted to your mentor (those required are on the separate problem sheet), they are still good practice problems! Feel free to discuss any of these with your mentor or peers.
+\begin{enumerate}
+	\item How many four digit numbers are there with:
+	\begin{enumerate}
+		\item strictly increasing digits?
+		\item strictly decreasing digits?
+		\item weakly increasing digits?
+		\item weakly decreasing digits?
+	\end{enumerate}
+	\item Travelling to Melbourne I can either take a direct train or a flight via Adelaide. If on the day of travelling, there are $4$ trains to Melbourne, $3$ morning flights to Adelaide and $5$ afternoon flights from Adelaide to Melbourne, how many different travel plans could I have?
+	\item A boy playing with blocks has three towers. One is two blocks high, another is four and the final is eight blocks high. In how many different orders can he deconstruct the towers if at any moment he may take the top block off any of the towers?
+	\item In a group with $5$ boys and $6$ girls, how many subgroups are there with:
+	\begin{enumerate}
+		\item an equal number of boys and girls?
+		\item one boy with any number of girls?
+		\item an odd number of boys and girls?
+	\end{enumerate}
+	\item I have three different buckets which collectively contain six coins.
+	\begin{enumerate}
+		\item How many different arrangements of coins and buckets are there if all the coins are different?
+		\item How many different arrangements of coins and buckets are there if all the coins are distinguishable?
+		\item How many different arrangements of coins and buckets are there if all the coins are different and each bucket has at least one coin?
+		\item How many different arrangements are there if the coins are indistinguishable, the buckets are now indistinguishable and each bucket contains at least one coin?
+	\end{enumerate}
+%	\item At a party each number of people shake the hands of a number of people there. Prove that there are at least two people who shook hands with the same number of people.
+	\item In how many ways can 500 distinct integers be chosen from $\{1,2,\dots,2015\}$ such that no two are consecutive?
+	\item Given $2n$ people, how many ways can we split them into $n$ pairs to play tennis?
+	\item An ordinary knock-out singles tennis tournament (with no seeds or byes) consists of a series of rounds. In each round, the remaining players play against each other in pairs, with the losers being eliminated and the winners going through to the next round; in the last round, the only two remaining players play the final match to determine the winner of the tournament. Suppose that there are $7$ rounds.
+	\begin{enumerate}
+		\item Before the tournaments starts, the organizers need to construct the draw, which specifies who plays who in the first round, and then which first-round winners play which other first-round winners in the second round, and so on. Of course, the organizers don't know who the first-round winners will be, so in the draw they are just thought of as the winner of the match between player $X$ and player $Y$, and so forth. How many possible draws are there?
+		\item Suppose that after the tournament is finished, the only things that are recorded are the draw and the winners of each match. How many different such records are possible?
+	\end{enumerate}
+	\item How many subsets of $\{1,2,\dots,n\}$ have an odd number of elements?
+%	\item Prove that if $5$points are placed in an equilateral triangle with side length $1$, there will always exist two points such that the distance between them is at most $1/2$.
+%	\item Prove that if $4$ points are placed inside a square of side length $8$, then there will be two points within distance $\sqrt{65}$ of each other.
+	\item For any two finite sets $A$ and $B$, define $f(A,B)$ to be the number of elements that are contained in either $A$ or in $B$ but not in both. Three given sets $X,Y,Z$ satisfy $f(X,Y)=f(Y,Z)=f(Z,X)$.
+	\begin{enumerate}
+		\item Prove that $f(X,Y)$ is even.
+		\item Find a set $W$ such that \[f(W,X)=f(W,Y)=f(W,Z)=\frac{1}{2}f(X,Y).\]
+	\end{enumerate}
+\end{enumerate}
+% for questions that are actually PHP not yet covered in this
+
+\end{document}

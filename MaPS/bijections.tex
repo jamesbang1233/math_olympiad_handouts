@@ -1,0 +1,206 @@
+\documentclass[12pt]{article}
+\usepackage[margin=0.5in]{geometry}
+\usepackage{amsmath,amsfonts,amsthm,amssymb}
+
+\usepackage{pgf,tikz,pgfplots}
+\pgfplotsset{compat=1.15}
+\usepackage{mathrsfs}
+\usetikzlibrary{arrows}
+
+\usepackage[framemethod=TikZ]{mdframed}
+
+\newcounter{theo}[subsection]\setcounter{theo}{0}
+\renewcommand{\thetheo}{\arabic{section}.\arabic{subsection}}
+\newenvironment{theo}[2][]{%
+	\refstepcounter{theo}%
+	\ifstrempty{#1}%
+	{\mdfsetup{%
+			frametitle={%
+				\tikz[baseline=(current bounding box.east),outer sep=0pt]
+				\node[anchor=east,rectangle,fill=cyan!50]
+				{\strut Problem~\thetheo};}}
+	}%
+	{\mdfsetup{%
+			frametitle={%
+				\tikz[baseline=(current bounding box.east),outer sep=0pt]
+				\node[anchor=east,rectangle,fill=cyan!50]
+				{\strut Problem~\thetheo:~#1};}}%
+	}%
+	\mdfsetup{innertopmargin=10pt,linecolor=cyan!50,%
+		linewidth=2pt,topline=true,%
+		frametitleaboveskip=\dimexpr-\ht\strutbox\relax
+	}
+	\begin{mdframed}[]\relax%
+		\label{#2}}{\end{mdframed}}
+
+%opening
+\title{Bijections}
+\author{James Bang}
+
+\begin{document}
+
+\maketitle
+
+\noindent A \textbf{bijection} is a one-to-one correspondence between two sets of elements, which implies the two sets have the \textbf{same size} (assuming both are finite sets). Each element corresponds to just one element (injective) and each element has a corresponding element (surjective). This makes it useful for counting a set which is very difficult to count directly, by forming a bijection to another set which is easier to count.
+
+\begin{figure}[h]
+	\centering
+	\definecolor{qqqqff}{rgb}{0.,0.,1.}
+	\definecolor{ffqqqq}{rgb}{1.,0.,0.}
+	\begin{tikzpicture}[line cap=round,line join=round,>=triangle 45,x=1.0cm,y=1.0cm]
+	\clip(-1.7186579503791248,-1.1901229967010947) rectangle (7.867937104831467,3.4467974484433195);
+	\draw [rotate around={90.:(0.,1.34)},line width=2.pt,color=ffqqqq,fill=ffqqqq,fill opacity=0.1599999964237213] (0.,1.34) ellipse (2.cm and 1.4847221962373969cm);
+	\draw [rotate around={90.:(6.26,1.34)},line width=2.pt,color=qqqqff,fill=qqqqff,fill opacity=0.15000000596046448] (6.26,1.34) ellipse (2.cm and 1.484722196237397cm);
+	\draw [->,line width=1.6pt] (0.,2.68) -- (6.26,2.68);
+	\draw [->,line width=1.6pt] (0.,2.01) -- (6.26,2.01);
+	\draw [->,line width=1.6pt] (0.,1.34) -- (6.26,1.34);
+	\draw [->,line width=1.6pt] (0.,0.67) -- (6.26,0.67);
+	\draw [->,line width=1.6pt] (0.,0.) -- (6.26,0.);
+	\draw (-0.3452592261574657,-0.6462027098806351) node[anchor=north west] {$A$};
+	\draw (5.937020086618837,-0.6190066955396122) node[anchor=north west] {$B$};
+	\draw (2.9046644875947774,-0.020694380037107184) node[anchor=north west] {$f$};
+	\begin{scriptsize}
+	\draw [fill=black] (0.,2.68) circle (3.0pt);
+	\draw [fill=black] (0.,0.) circle (3.0pt);
+	\draw [fill=black] (6.26,0.) circle (3.0pt);
+	\draw [fill=black] (6.26,2.68) circle (3.0pt);
+	\draw [fill=black] (0.,1.34) circle (3.0pt);
+	\draw [fill=black] (0.,2.01) circle (3.0pt);
+	\draw [fill=black] (0.,0.67) circle (3.0pt);
+	\draw [fill=black] (6.26,1.34) circle (3.0pt);
+	\draw [fill=black] (6.26,2.01) circle (3.0pt);
+	\draw [fill=black] (6.26,0.67) circle (3.0pt);
+	\end{scriptsize}
+	\end{tikzpicture}
+\end{figure}
+\noindent As an easy example, suppose we wanted to prove: \textit{How do I know there are the same number of fingers on my left hand and my right hand?} Of course, the obvious way would be to ``inspect" and notice there are five fingers on both hands (hopefully). However, an easier way would be to simply match up each finger with the corresponding finger on the other hand: this \textbf{matching} is the bijection between the two sets of fingers, meaning there are the same number on both hands.
+
+\section{Double Counting}
+\textbf{Double Counting} involves counting the same thing in two different ways, by changing the perspective of how to count. This allows us to equate the expressions to determine some important information from the problem.
+\begin{theo}{f}
+	Show that the number of binary sequences of length $n$ is equal to the number of subsets of $\{1,2,\dots,n\}$.	
+\end{theo}
+\noindent Any reasonably trained student would be able to notice that both these quantities are simply equal to $2^n$. However, we can instead give a direct proof using bijections:
+
+\vspace{2mm}
+
+\noindent Let's give an example for $n=7$, and consider the binary string \textbf{0110001.} Then, we consider the set of integers from $\{1,2,\dots,7\}$ which contains exactly the numbers whose position in the binary string is $1$, i.e.
+\begin{align*}
+&1 \ \textbf{2} \ \textbf{3} \ 4 \ 5 \ 6 \ \textbf{7} \\
+&0 \ \textbf{1} \ \textbf{1} \ 0 \ 0 \ 0 \ \textbf{1}
+\end{align*}
+and thus the corresponding set would be $\{2,3,7\}$. This operation is obviously reversible since for any such set, the binary string can be constructed which has $1$ exactly in the digit places which appear in the set. Hence, this is a bijection between the binary sequences of a certain length $n$ and the subsets of $\{1,2,\dots,n\}$, and thus have the same number. $\square$
+
+\begin{theo}[Paths in a $m\times n$ rectangle]{penis}
+	Let $m,n$ be positive integers, and consider a $m\times n$ rectangle. Denote $A,B$ as the bottom left and top right corners of the rectangle respectively. Count the number of paths from $A$ to $B$ along the grid lines, if you may only travel right or up at any time.
+\end{theo}
+The idea of using bijections is that we want to transform the problem into something that we know better how to count. Hence, in this case, we can encode the path as a sequence of letters $R$ (for Right) and $U$ (for Up): then, for the example grid shown below, the sequence will be \[RRURUURURRRUR.\]
+
+\begin{figure}[h]
+	\centering
+		\definecolor{ffqqqq}{rgb}{1.,0.,0.}
+		\definecolor{aqaqaq}{rgb}{0.6274509803921569,0.6274509803921569,0.6274509803921569}
+		\begin{tikzpicture}[line cap=round,line join=round,>=triangle 45,x=1.0cm,y=1.0cm]
+		\clip(-0.5803332661425749,-0.627588523819123) rectangle (8.665114560236479,5.377345197300843);
+		\draw [line width=2.pt,color=aqaqaq] (0.,5.)-- (0.,0.);
+		\draw [line width=2.pt,color=aqaqaq] (1.,0.)-- (1.,5.);
+		\draw [line width=2.pt,color=aqaqaq] (2.,5.)-- (2.,0.);
+		\draw [line width=2.pt,color=aqaqaq] (3.,0.)-- (3.,5.);
+		\draw [line width=2.pt,color=aqaqaq] (4.,0.)-- (4.,5.);
+		\draw [line width=2.pt,color=aqaqaq] (5.,5.)-- (5.,0.);
+		\draw [line width=2.pt,color=aqaqaq] (6.,0.)-- (6.,5.);
+		\draw [line width=2.pt,color=aqaqaq] (7.,5.)-- (7.,0.);
+		\draw [line width=2.pt,color=aqaqaq] (8.,0.)-- (8.,5.);
+		\draw [line width=2.pt,color=aqaqaq] (0.,0.)-- (8.,0.);
+		\draw [line width=2.pt,color=aqaqaq] (8.,1.)-- (0.,1.);
+		\draw [line width=2.pt,color=aqaqaq] (0.,2.)-- (8.,2.);
+		\draw [line width=2.pt,color=aqaqaq] (8.,3.)-- (0.,3.);
+		\draw [line width=2.pt,color=aqaqaq] (0.,4.)-- (8.,4.);
+		\draw [line width=2.pt,color=aqaqaq] (8.,5.)-- (0.,5.);
+		\draw [line width=2.8pt,color=ffqqqq] (0.,0.)-- (2.,0.);
+		\draw [line width=2.8pt,color=ffqqqq] (2.,0.)-- (2.,1.);
+		\draw [line width=2.8pt,color=ffqqqq] (2.,1.)-- (3.,1.);
+		\draw [line width=2.8pt,color=ffqqqq] (3.,1.)-- (3.,3.);
+		\draw [line width=2.8pt,color=ffqqqq] (3.,3.)-- (4.,3.);
+		\draw [line width=2.8pt,color=ffqqqq] (4.,3.)-- (4.,4.);
+		\draw [line width=2.8pt,color=ffqqqq] (4.,4.)-- (7.,4.);
+		\draw [line width=2.8pt,color=ffqqqq] (7.,4.)-- (7.,5.);
+		\draw [line width=2.8pt,color=ffqqqq] (7.,5.)-- (8.,5.);
+		\draw (-0.457470172104315,0.06351638014609053) node[anchor=north west] {$A$};
+		\draw (8.035441203290397,5.423418857565191) node[anchor=north west] {$B$};
+		\end{tikzpicture}
+		\label{lynwang}
+		\caption{Example Grid Walk.}
+\end{figure}
+\noindent Notice that the resulting sequence of letters always consists of $m$ number of $R$'s and $n$ number of $U$'s (where, in this case, $m=8$ and $n=5$), since no matter how you move across from $A$ to $B$, you simply have to move right $m$ times and up $n$ times.
+
+\vspace{2mm}
+
+\noindent However, you can also check than for any given sequence satisfying that property (certain number of $R$ and $U$'s), we can construct a corresponding path encoded by this sequence by viewing the letters $R$ and $U$ as instructions to move right or up at any stage. Thus, we have constructed a bijection between: \begin{itemize}
+	\item The number of paths from $A$ to $B$
+	\item The number of sequences consisting of exactly $m$ number of $R$'s and $n$ number of $U$'s.
+\end{itemize}
+Hence, by the bijection principle, both of these count the same thing and thus are the same number. We know how to count the latter: it is simply $\binom{m+n}{n}$, which can be thought as choosing $n$ spots out of a possible $m+n$ to place the $U$'s. Therefore, the number of lattice paths from $A$ to $B$ must also be $\binom{m+n}{n}$.
+
+\begin{theo}[Sum of Squares Identity]{lynwang2}
+	Prove that $\displaystyle \binom{n}{0}^2+\binom{n}{1}^2+\dots+\binom{n}{n}^2=\binom{2n}{n}$ for each integer $n\geq 1$.
+\end{theo}
+\noindent There are several ways to solve this problem, including a somewhat straightforward mathematical induction and equating the coefficient of $x^n$ in $(1+x)^n\cdot (1+x)^n=(1+x)^{2n}$. However, we provide a bijective proof (which is nicer than the algebraic techniques above!)
+
+\vspace{2mm}
+
+\noindent Consider a group of $2n$ people, $n$ of whom are boys and the other are girls. We denote $S$ as the number of ways to choose exactly $n$ people out of these $2n$ people. 
+\begin{itemize}
+	\item By ignoring gender, there are exactly $\binom{2n}{n}$ ways of selecting $n$ people from a possible $2n$.
+	\item For each $k\leq n$, consider choosing exactly $k$ boys and $n-k$ girls (giving a total of $n$ people). There are $\binom{n}{k}$ ways of choosing the boys, and $\binom{n}{n-k}$ ways of choosing the girls: since the choosing is independent of one another, the number of ways of doing so is simply their product, $\binom{n}{k}\cdot \binom{n}{n-k}=\binom{n}{k}^2$.
+	
+	\vspace{2mm}
+	
+	\noindent Hence, the number of ways of choosing $n$ people is the sum of $\binom{n}{k}^2$ from $k=0$ to $k=n$, and hence $S=\binom{n}{0}^2+\binom{n}{1}^2+\dots+\binom{n}{n}^2$.
+\end{itemize}
+Hence, by equating $S$ in two ways, we indeed get \[\binom{2n}{n}=S=\binom{n}{0}^2+\binom{n}{1}^2+\dots+\binom{n}{n}^2.\]
+\section{Problems}
+
+\begin{enumerate}
+	\item Using bijections or reinterpreting the identities combinatorially, prove the following:
+	\begin{enumerate}
+		\item $\displaystyle \binom{n}{r}=\binom{n}{n-r}$
+		\item $\displaystyle \sum^n_{k=0}\binom{n}{k}=2^n$
+		\item $\displaystyle \sum^n_{k=0}k\cdot \binom{n}{k}=n\cdot 2^{n-1}$
+		\item $\displaystyle \binom{n}{r}+\binom{n}{r+1}=\binom{n+1}{r+1}$
+		\item $\displaystyle k\binom{n}{k}=n\binom{n-1}{k-1}$.
+	\end{enumerate}
+	\item Let $m,n$ be positive integers. Show that the number of ways to partition $n$ into $m$ parts is equal to the number of partitions of $n$ whose largest part is exactly $m$.
+	\item Prove that for a set with $n$ elements, where $n>0$, the number of subsets with an even amount of elements is equal to the number of subsets with an odd amount of elements.
+	\item Let $A$ be a set of $2016$ integers whose sum is $1$. What is the maximum possible number of subsets $A$ which have positive sum?
+	\item Let $n$ be a positive integer. In how many ways can one write a sum of at least two positive integers that add up to $n$? Consider the same set of integers written in a different order as being different. (For example, there are $3$ ways to express $3$: $3=1+2=2+1=1+1+1$.)
+	\item A triangular grid is formed by tiling an equilateral triangle of side length $n$ by equilateral triangles of side length $1$. Determine the number of rhombuses of side length $1$ bounded by line segments of the grid.
+	\item Seyoon tosses a fair coin $16$ times while Kevin tosses a fair coin $15$ times. What is the probability that Seyoon obtained more heads than Kevin?
+	\item Andy the paper boy delivers $20$ houses along a street. Being a well-known slacker, he does not always deliver the paper to every house.However, he never misses two consecutive houses, otherwise he would get fired. How many ways can Andy deliver the papers in this way?
+	\item In a certain city, all the car plates have six numbers, from $000000$ to $999999$. A car plate is called \textit{special} if the sum of its first three digits is equal to the sum of its last three digits. A car plate is called \textit{medium} if the sum of all its digits is $27$. Let $X$ and $Y$ represent the number of special and medium car plates respectively. Find $Y-X$.
+	\item A triangular grid is formed by tiling an equilateral triangle of side length $n$ by $n^2$ equilateral triangles of side length $1$. Determine the number of parallelograms bounded by line segments of the grid.
+	\item Let $n$ be a positive integer. Find the number of lattice paths from $(0,0)$ to $(n,n)$ using only unit up and right steps, such that the path stays in the region $x\geq y$. (This number is the $n$-th \textbf{Catalan Number}.)
+	\item Let $a_1,a_2,\dots,a_n$ be a sequence of real numbers. The sum of $m$ successive terms is called a $m$-sum. Find the largest $n$ such that the $7$-sum is negative and each $11$-sum is positive.
+	\item Let $n$ be a positive integer. Each point $(x,y)$ in the plane, where $x$ and $y$ are non-negative integers with $x+y<n$, is coloured red or blue, subject to the following condition: if a point $(x,y)$ is red, then so are all points $(x',y,)$ with $x'\leq x$ and $y'\leq y$. Let $A$ be the number of ways to choose $n$ blue points with distinct $x$-coordinates, and let $B$ be the number of ways to choose $n$ blue points with distinct $y$-coordinates. Prove that $A=B$.
+	\item Let $k\geq 2$ be an integer. Consider a $k\cdot k$ chessboard consisting of $k^2$ unit squares. A configuration of $k$ rooks on this board is \textit{peaceful} if every row and column contains exactly one rook. Let $X$ represent the set of unit squares on the diagonal that runs from the bottom-right square to the top-left square. Let $A$ denote the set of unit squares that lie above $X$, and let $B$ denote the set of unit squares that lie on or below $X$.
+	
+	\vspace{2mm}
+	
+	\noindent For each non-negative integer $n$, let $f(n)$ be the number of peaceful configurations of $k$ rooks on the chessboard such that $A$ contains exactly $n$ rooks.
+	
+	\vspace{2mm}
+	
+	\noindent Prove that $f(p)=f(q)$ for each pair of non-negative integers $p,q$ satisfying $p+q=k-1$.
+	\item Let $a_n$ represent the number of ways which the positive integer $n$ can be written as a sum of $1$s and $2$s, taking the order into account. Let $b_n$ represent the number of ways that $n$ can be written as a sum of integers greater than $1$, again taking order into account.
+	
+	\vspace{2mm}
+	
+	\noindent For instance, $a_4=5$ since $4=2+2=1+1+2=1+2+1=2+1+1=1+1+1+1$, and $b_6=5$ since $6=6=2+4=3+3=4+2=2+2+2$.
+	
+	\vspace{2mm}
+	
+	\noindent Prove that $a_n=b_{n+2}$ for each $n$.
+	\item A king is given a gift of 240 barrels of wine. However, he is also informed that one barrel is poisoned. After drinking the poisoned wine, one dies within a week. The king has five prisoners who can be sacrificed in order to find the poisoned barrel. Can he find the poisoned barrel in two weeks?
+\end{enumerate}
+
+\end{document}
